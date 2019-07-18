@@ -1,0 +1,144 @@
+{extends file="admin-layout.tpl"}
+
+{block name="no-return-functions"}
+	{$admin_current_location = 'tools'}
+{/block}
+
+{block name="page-title"}{intl l='Contact'}{/block}
+
+{block name="main-content"}
+<div class="modules">
+	<div id="wrapper" class="container">
+		<div class="clearfix">
+			<ul class="breadcrumb pull-left">
+				<li><a href="{url path='/admin/home'}">{intl l="Home"}</a></li>
+				<li><a href="{url path='/admin/tools'}">{intl l="Outils"}</a></li>
+				<li>{intl l="Contact"}</li>
+			</ul>
+		</div>
+		<div class="row">
+			<div class="col-md-12">
+				<div class="general-block-decorator">
+					<div class="table-responsive">
+						<table class="table table-striped table-condensed" id="category_list">
+							<caption>
+								{intl l="Contact"}
+								 <a class="btn btn-default btn-primary action-btn" title="{intl l="Ajouter un menu"}" href="#meedlecontact_dialog" data-toggle="modal">
+								<span class="glyphicon glyphicon-plus-sign"></span>
+								</a>
+							</caption>
+							<thead>
+								<tr>
+									<th class="col-md-2">{intl l="Nom"}</th>
+									<th class="col-md-2">{intl l="E-mail"}</th>
+									<th class="col-md-2">{intl l="Sujet"}</th>
+									<th class="col-md-5">{intl l="Message"}</th>
+									<th class="col-md-1">{intl l="Quand"}</th>
+								</tr>
+							</thead>
+							<tbody>
+								{loop type="meedlecontact" name="contact"}
+                                    <tr>
+                                        <td>{$NOM} {$PRENOM}</td>
+                                        <td>{$EMAIL}</td>
+                                        <td>{$SUJET}</td>
+                                        <td>{$DESCRIPTION}</td>
+                                        <td>{format_date date=$CREATEDAT}</td>
+                                    </tr>
+                                 {/loop}
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="modal fade" id="menu_delete_dialog" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h3>{intl l="Supprimer le menu"}</h3>
+            </div>
+            {form name="menu.delete.form"}
+            <form method="POST" action="{url path='/admin/modules/menu/delete'}" id="menu_delete_dialog_form">
+	            <div class="modal-body">
+	            	{form_hidden_fields form=$form}
+	            	
+            		{form_field form=$form field='success_url'}
+            		<input type="hidden" name="{$name}" value="{url path='/admin/modules/menu/gestion'}">
+			        {/form_field}
+	                {intl l="Voulez-vous vraiment supprimer ce menu ?"}
+	                {form_field form=$form field='menu_id'}
+                    <input type="hidden" name="{$name}" id="menu_delete_id" value="" />
+                    {/form_field}
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal" aria-hidden="true"><span class="glyphicon glyphicon-remove"></span> {intl l="Non"}</button>
+                    <button type="submit" class="btn btn-default btn-primary"><span class="glyphicon glyphicon-check"></span> {intl l="Oui"}</button>
+                </div>
+            </form>
+            {/form}
+        </div>
+    </div>
+</div>
+<div class="modal fade " id="meedlecontact_dialog" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h3>{intl l="Configuration reCAPTCHA version 3"}</h3>
+            </div>
+            <form method="POST" action="{url path='/admin/module/meedle/contact'}" >
+                <div class="modal-body">
+            		<input type="hidden" name="action" value="infocaptachagv3">
+            		<input type="hidden" name="success_url" value="{url path='/admin/modules/meedle/contact-accueil'}">
+
+					{loop type="module-config" name="clesite" module="Meedlecontact" variable="module-meedlecontact-captchagooglev3-clesite"}
+					<div class="form-group ">
+						<label for="clee_publique" class="control-label">{intl l="Clé du site"} : </label>
+						<input type="text" id="clee_publique" name="ksite" required="required" title="{intl l="Clé du site"}" placeholder="{intl l="Clé du site"}" class="form-control" value="{$VALUE}">
+					</div>
+					{/loop}
+					
+					{loop type="module-config" name="clesecrete" module="Meedlecontact" variable="module-meedlecontact-captchagooglev3-clesecrete"}
+					<div class="form-group ">
+						<label for="clee_prive" class="control-label">{intl l="Clé secrète"} : </label>
+						<input type="text" id="clee_prive" name="ksecrete" required="required" title="{intl l="Clé secrète"}" placeholder="{intl l="Clé secrète"}" class="form-control" value="{$VALUE}">
+					</div>
+					{/loop}
+					
+					{loop type="module-config" name="score" module="Meedlecontact" variable="module-meedlecontact-captchagooglev3-score"}
+					<div class="form-group ">
+						<label for="score" class="control-label">{intl l="Score"} : </label>
+						<input type="text" id="score" name="score"  title="{intl l="Score"}" placeholder="0.5" class="form-control" value="{$VALUE}">
+					</div>
+					{/loop}
+					
+					<a href="https://www.google.com/recaptcha/admin/" title="" target="_blank">Pour obtenir vos clés - reCAPTCHA version 3 - https://www.google.com/recaptcha/admin/</a>
+					
+				</div>
+
+				<div class="modal-footer">
+                    <button  type="submit" class="btn btn-default btn-primary"><span class="glyphicon glyphicon-check"></span> {intl l="Sauvegarder"}</button>
+	            </div>
+            </form>
+
+        </div>
+    </div>
+</div>
+
+
+{/block}
+
+{block name="after-javascript-include"}
+<script>
+$(function() {
+	// Set proper menu ID in delete from
+	$('a.js-delete-menu').click(function(ev) {
+		$('#menu_delete_id').val($(this).data('id'));
+	});
+});
+</script>
+{/block}

@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<config xmlns="http://thelia.net/schema/dic/config"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://thelia.net/schema/dic/config http://thelia.net/schema/dic/config/thelia-1.0.xsd">
+
+    <loops>
+        <loop name="meedlecontact" class="MeedleContact\Loop\MeedleContactLoop" />
+    </loops>
+
+    <forms>
+        <!--
+        <form name="MyFormName" class="MeedleContact\Form\MySuperForm" />
+        -->
+    </forms>
+
+    <commands>
+        <!--
+        <command class="MeedleContact\Command\MySuperCommand" />
+        -->
+    </commands>
+
+    <!--
+    <services>
+
+    </services>
+    -->
+
+    <hooks>
+        <hook id="meedlecontact.hook" class="MeedleContact\Hook\MeedleContactHook">
+			<tag name="hook.event_listener" event="main.top-menu-tools" type="back" method="onMainTopMenuToolsContents" />
+			<tag name="hook.event_listener" event="main.head-bottom" type="front" method="onHeadBottomContents" />
+			<tag name="hook.event_listener" event="contact.form-top" type="front" method="onContactFormTopContents" />
+			<tag name="hook.event_listener" event="contact.after-javascript-include" type="front" method="onContactAfterJavascriptInclude" />
+        </hook>
+    </hooks>
+    <!--
+    <hooks>
+        <hook id="meedlecontact.hook" class="MeedleContact\Hook\MySuperHook">
+            <tag name="hook.event_listener" event="main.body.bottom" type="front|back|pdf|email" method="onMainBodyBottom" />
+        </hook>
+    </hooks>
+    -->
+
+    <!--
+    <exports>
+
+    </exports>
+    -->
+
+    <!--
+    <imports>
+
+    </imports>
+    -->
+</config>

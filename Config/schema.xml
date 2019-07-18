@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<database defaultIdMethod="native" name="thelia"
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:noNamespaceSchemaLocation="../../../core/vendor/propel/propel/resources/xsd/database.xsd" >
+    <table name="meedleContact" namespace="MeedleContact\Model">
+        <column autoIncrement="true" name="id" primaryKey="true" required="true" type="INTEGER" />
+        <column name="civilite" size="20" type="VARCHAR" />
+        <column name="nom" size="50" type="VARCHAR" />
+        <column name="prenom" size="50" type="VARCHAR" />
+        <column name="email" size="100" type="VARCHAR" />
+        <column name="phone" size="20" type="VARCHAR" />
+        <column name="sujet" size="255" type="VARCHAR" />
+        <column name="description" type="CLOB" />
+        <column name="autre" type="CLOB" />
+    	<column name="infosCaptcha" type="CLOB" />
+    	<column name="infosNavig" type="CLOB" />
+        <column name="score" size="10" type="VARCHAR" />
+		<column defaultValue="0" name="accepte_newsletter" required="true" type="TINYINT" />
+		<behavior name="timestampable" />
+	</table>
+    <external-schema filename="local/config/schema.xml" referenceOnly="true" />
+</database>

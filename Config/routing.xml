@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<routes xmlns="http://symfony.com/schema/routing"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://symfony.com/schema/routing http://symfony.com/schema/routing/routing-1.0.xsd">
+
+
+    <route id="meedle_contact" path="/module/mcontact" methods="post">
+        <default key="_controller">MeedleContact\Controller\MeedleContactController::sendForm</default>
+    </route>
+
+    <route id="meedlecontact_admin" path="/admin/module/meedle/contact" methods="post">
+        <default key="_controller">MeedleContact\Controller\MeedleContactAdminController::form</default>
+    </route>
+    
+    <!-- contact management -->
+    <route id="contact.send" path="/contact" methods="post">
+        <default key="_controller">MeedleContact\Controller\MeedleContactController::sendForm</default>
+        <default key="_view">contact</default>
+    </route>
+    
+    <route id="meedlecontact.adminTemplate" path="/admin/modules/meedle/{template}">
+        <default key="_controller">Thelia\Controller\Admin\AdminController::processTemplateAction</default>
+        <requirement key="template">.*</requirement>
+    </route>
+    
+    <!--
+
+    if a /admin/module/meedlecontact/ route is provided, a "Configuration" button will be displayed
+    for the module in the module list. Clicking this button will invoke this route.
+
+
+    <route id="my_route_id" path="/admin/module/meedlecontact/route-name">
+        <default key="_controller">MeedleContact\Full\Class\Name\Of\YourAdminController::methodName</default>
+    </route>
+
+    <route id="my_route_id" path="/my/route/name">
+        <default key="_controller">MeedleContact\Full\Class\Name\Of\YourOtherController::methodName</default>
+    </route>
+
+    ...add as many routes as required.
+
+    <route>
+    ...
+    </route>
+    -->
+
+</routes>
