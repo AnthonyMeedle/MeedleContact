@@ -29,7 +29,7 @@ class MeedleContactLoop extends BaseLoop implements PropelSearchLoopInterface{
         if ($id) {
             $search->filterById($id, Criteria::IN);
         }
-
+		$search->orderByCreatedAt(Criteria::DESC);
 		return $search;
     }
     /**

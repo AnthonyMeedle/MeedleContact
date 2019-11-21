@@ -20,11 +20,16 @@
         -->
     </commands>
 
-    <!--
     <services>
-
+         <service id="meedlecontact.listener" class="MeedleContact\EventListeners\MeedleContactListener" scope="request">
+        	<argument type="service" id="request"/>
+            <argument type="service" id="thelia.parser"/>
+            <argument type="service" id="mailer"/>
+            <argument type="service" id="thelia.securityContext"/>
+            <tag name="kernel.event_subscriber"/>
+        </service>
     </services>
-    -->
+
 
     <hooks>
         <hook id="meedlecontact.hook" class="MeedleContact\Hook\MeedleContactHook">
@@ -32,6 +37,8 @@
 			<tag name="hook.event_listener" event="main.head-bottom" type="front" method="onHeadBottomContents" />
 			<tag name="hook.event_listener" event="contact.form-top" type="front" method="onContactFormTopContents" />
 			<tag name="hook.event_listener" event="contact.after-javascript-include" type="front" method="onContactAfterJavascriptInclude" />
+			<tag name="hook.event_listener" event="register.form-top" type="front" method="onRegisterFormTopContents" />
+			<tag name="hook.event_listener" event="register.after-javascript-include" type="front" method="onRegisterAfterJavascriptInclude" />
         </hook>
     </hooks>
     <!--

@@ -26,26 +26,56 @@ class MeedleContactHook extends BaseHook {
 		}
     }
 	public function onContactFormTopContents(HookRenderEvent $event){
-        $clesite = MeedleContact::getConfigValue('module-meedlecontact-captchagooglev3-clesite');
-		if($clesite){
-			$content = '<input type="hidden" name="recaptcha_response" id="recaptchaResponse">';
-			$event->add($content);
+		if(MeedleContact::getConfigValue('module-meedlecontact-captchagooglev3-contact')){
+			$clesite = MeedleContact::getConfigValue('module-meedlecontact-captchagooglev3-clesite');
+			if($clesite){
+				$content = '<input type="hidden" name="recaptcha_response" id="recaptchaResponse">';
+				$event->add($content);
+			}
 		}
     }
 	public function onContactAfterJavascriptInclude(HookRenderEvent $event){
-        $clesite = MeedleContact::getConfigValue('module-meedlecontact-captchagooglev3-clesite');
-		if($clesite){
-			$content = '
-	<script>
-		grecaptcha.ready(function() {
-			grecaptcha.execute(\''. $clesite .'\', {action: \'contact\'}).then(function(token) {
-				var recaptchaResponse = document.getElementById(\'recaptchaResponse\');
-				recaptchaResponse.value = token;
+		if(MeedleContact::getConfigValue('module-meedlecontact-captchagooglev3-contact')){
+			$clesite = MeedleContact::getConfigValue('module-meedlecontact-captchagooglev3-clesite');
+			if($clesite){
+				$content = '
+		<script>
+			grecaptcha.ready(function() {
+				grecaptcha.execute(\''. $clesite .'\', {action: \'contact\'}).then(function(token) {
+					var recaptchaResponse = document.getElementById(\'recaptchaResponse\');
+					recaptchaResponse.value = token;
+				});
 			});
-		});
-	</script>';
-			$event->add($content);
+		</script>';
+				$event->add($content);
+			}
 		}
     }
+	public function onRegisterFormTopContents(HookRenderEvent $event){
+		if(MeedleContact::getConfigValue('module-meedlecontact-captchagooglev3-register')){
+			$clesite = MeedleContact::getConfigValue('module-meedlecontact-captchagooglev3-clesite');
+			if($clesite){
+				$content = '<input type="hidden" name="recaptcha_response" id="recaptchaResponse">';
+				$event->add($content);
+			}
+		}
+    }
+	public function onRegisterAfterJavascriptInclude(HookRenderEvent $event){
+		if(MeedleContact::getConfigValue('module-meedlecontact-captchagooglev3-register')){
+			$clesite = MeedleContact::getConfigValue('module-meedlecontact-captchagooglev3-clesite');
+			if($clesite){
+				$content = '
+		<script>
+			grecaptcha.ready(function() {
+				grecaptcha.execute(\''. $clesite .'\', {action: \'register\'}).then(function(token) {
+					var recaptchaResponse = document.getElementById(\'recaptchaResponse\');
+					recaptchaResponse.value = token;
+				});
+			});
+		</script>';
+				$event->add($content);
+			}
+		}
+	}
 }
 ?>
