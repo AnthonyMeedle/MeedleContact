@@ -72,21 +72,7 @@ class MeedleContactController extends BaseFrontController{
 		$contact->save();
 		
 		if($verified){
-		$this->getMailer()->sendEmailMessage('module-meedle-contact', 
-											 [ ConfigQuery::getStoreEmail() => $_REQUEST['nom'] . ' ' . $_REQUEST['prenom'] ], 
-											 [ ConfigQuery::getStoreEmail() => ConfigQuery::getStoreName() ], 
-											 $_REQUEST, null, [], [], [ $_REQUEST['email'] => $_REQUEST['nom'] . ' ' . $_REQUEST['prenom']]);
-			/*
-			$this->getMailer()->sendSimpleEmailMessage(
-				[ ConfigQuery::getStoreEmail() => $_REQUEST['nom'] . ' ' . $_REQUEST['prenom'] ],
-				[ ConfigQuery::getStoreEmail() => ConfigQuery::getStoreName() ],
-				$_REQUEST['sujet'],
-				'',
-				$_REQUEST['description'],
-				[],
-				[],
-				[ $_REQUEST['email'] => $_REQUEST['nom'] . ' ' . $_REQUEST['prenom'] ]
-			);*/
+			$this->getMailer()->sendEmailToShopManagers('module-meedle-contact', $_REQUEST, [$_REQUEST['email'] => $_REQUEST['nom'] . ' ' . $_REQUEST['prenom']]);
 		}
 		return $this->generateRedirectFromRoute('contact.success');
 	}
