@@ -14,7 +14,8 @@ class MeedleContactLoop extends BaseLoop implements PropelSearchLoopInterface{
     protected function getArgDefinitions()
     {
         return new ArgumentCollection(
-            Argument::createIntListTypeArgument('id')
+            Argument::createIntListTypeArgument('id'),
+            Argument::createAnyTypeArgument('score')
         );
     }
     /**
@@ -29,7 +30,14 @@ class MeedleContactLoop extends BaseLoop implements PropelSearchLoopInterface{
         if ($id) {
             $search->filterById($id, Criteria::IN);
         }
-		$search->orderByCreatedAt(Criteria::DESC);
+		$score = $this->getScore();
+        if ($score) {
+            $search->filterByScore($score, Criteria::GREATER_EQUAL);
+        }
+		
+		
+		
+		$search->orderById(Criteria::DESC);
 		return $search;
     }
     /**

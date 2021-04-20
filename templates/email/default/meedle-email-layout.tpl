@@ -397,15 +397,6 @@ body,#bodyTable{
                                             <tr>
                                                 <td align="center" valign="top" style="padding-bottom: 40px;mso-table-lspace: 0pt;mso-table-rspace: 0pt;border-collapse: collapse !important;">
                                                     <table border="0" cellpadding="10" cellspacing="0" width="100%" class="bodyContentBlock" style="mso-table-lspace: 0pt;mso-table-rspace: 0pt;background-color: #FFFFFF;border-top: 0;border-bottom: 1px solid #E5E5E5;border-collapse: collapse !important;">
-                                                        {block name="image-header"}
-                                                        <tr>
-                                                            <td class="bodyContent" style="padding-bottom: 20px;mso-table-lspace: 0pt;mso-table-rspace: 0pt;color: #505050;font-family: Helvetica;font-size: 16px;line-height: 150%;padding-top: 20px;text-align: left;border-collapse: collapse !important;">
-                                                                {local_media type="banner"}
-                                                                <img class="bodyImage" src="{$MEDIA_URL}" alt="" border="0" style="border: 0px none;border-color: ;border-style: none;border-width: 0px;margin: 0;padding: 0;line-height: 100%;outline: none;text-decoration: none;display: inline;max-width: 600px;">
-                                                                {/local_media}
-                                                            </td>
-                                                        </tr>
-                                                        {/block}
                                                         <tr>
                                                             <td valign="top" class="bodyContent" style="mso-table-lspace: 0pt;mso-table-rspace: 0pt;color: #505050;font-family: Helvetica;font-size: 14px;line-height: 150%;padding-top: 0px;padding-bottom: 20px;text-align: left;border-collapse: collapse !important;">
                                                                 {block name="email-content"}{/block}

@@ -33,7 +33,7 @@ Vous avez un nouveau message de {$nom} {$prenom},
 {$description}
 
 
-{if $phone}téléphone : {$phone}{/if}
+téléphone : {$phone}
 email : {$email}')->setHtmlMessage('<p>Bonjour, 
 <br>
 Vous avez un nouveau message de {$nom} {$prenom},</p>
@@ -44,7 +44,7 @@ Vous avez un nouveau message de {$nom} {$prenom},</p>
 {$description}
 </p>
 <p>
-{if $phone}téléphone : {$phone}<br>{/if}
+téléphone : {$phone}<br>
 email : {$email}
 
 </p>')
@@ -60,7 +60,7 @@ Vous avez un nouveau message de {$nom} {$prenom},
 {$description}
 
 
-{if $phone}téléphone : {$phone}{/if}
+téléphone : {$phone}
 email : {$email}')->setHtmlMessage('<p>Bonjour, 
 <br>
 Vous avez un nouveau message de {$nom} {$prenom},</p>
@@ -71,7 +71,7 @@ Vous avez un nouveau message de {$nom} {$prenom},</p>
 {$description}
 </p>
 <p>
-{if $phone}téléphone : {$phone}<br>{/if}
+téléphone : {$phone}<br>
 email : {$email}
 
 </p>')
