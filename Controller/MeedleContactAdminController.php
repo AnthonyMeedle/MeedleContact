@@ -15,13 +15,13 @@ class MeedleContactAdminController extends BaseAdminController{
     public function __construct(){}
 	public function noAction(){}
 	public function form(){
-		print_r($_REQUEST);
+
 		
 		Objmc::setConfigValue('module-meedlecontact-captchagooglev3-clesite', $_REQUEST['ksite']);
 		Objmc::setConfigValue('module-meedlecontact-captchagooglev3-clesecrete', $_REQUEST['ksecrete']);
 		Objmc::setConfigValue('module-meedlecontact-captchagooglev3-score', $_REQUEST['score']);
 		
-		exit;
+
 		if(!empty($_REQUEST["stop"])) exit;
 		if(!empty($_REQUEST["success_url"])) return $response = $this->generateRedirect($_REQUEST["success_url"]);
 	}
