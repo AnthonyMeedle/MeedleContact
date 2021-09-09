@@ -20,10 +20,10 @@ class MeedleContact extends BaseModule
             $message = new Message();
             $message
                 ->setName('module-meedle-contact')
-                ->setHtmlLayoutFileName('meedle-email-layout.tpl')
+                ->setHtmlLayoutFileName('default-html-layout.tpl')
                 ->setLocale('en_US')
-                ->setTitle('Module - Meedle Contact - Admin')
-                ->setSubject('Mail form contact {config key="store_name"}')
+                ->setTitle('Questionnaire confirmation')
+                ->setSubject('Questionnaire bien remplie {config key="store_name"}')
                 ->setTextMessage('Bonjour, 
 
 Vous avez un nouveau message de {$nom} {$prenom},
@@ -32,9 +32,7 @@ Vous avez un nouveau message de {$nom} {$prenom},
 
 {$description}
 
-
-téléphone : {$phone}
-email : {$email}')->setHtmlMessage('<p>Bonjour, 
+email : {$email}')->setHtmlMessage('{block name="email-content"}<p>Bonjour, 
 <br>
 Vous avez un nouveau message de {$nom} {$prenom},</p>
 <p>
@@ -44,13 +42,12 @@ Vous avez un nouveau message de {$nom} {$prenom},</p>
 {$description}
 </p>
 <p>
-téléphone : {$phone}<br>
 email : {$email}
 
-</p>')
+</p>{/block}')
                 ->setLocale('fr_FR')
-                ->setTitle('Module - Meedle Contact - Message pour l\'admin.')
-                ->setSubject('Message du formulaire de contact {config key="store_name"}')
+                ->setTitle('Questionnaire confirmation')
+                ->setSubject('Questionnaire bien remplie {config key="store_name"}')
                 ->setTextMessage('Bonjour, 
 
 Vous avez un nouveau message de {$nom} {$prenom},
@@ -59,9 +56,7 @@ Vous avez un nouveau message de {$nom} {$prenom},
 
 {$description}
 
-
-téléphone : {$phone}
-email : {$email}')->setHtmlMessage('<p>Bonjour, 
+email : {$email}')->setHtmlMessage('{block name="email-content"}<p>Bonjour, 
 <br>
 Vous avez un nouveau message de {$nom} {$prenom},</p>
 <p>
@@ -71,11 +66,9 @@ Vous avez un nouveau message de {$nom} {$prenom},</p>
 {$description}
 </p>
 <p>
-téléphone : {$phone}<br>
 email : {$email}
 
-</p>')
-                ->save()
+</p>{/block}')->save()
             ;
         }
     }

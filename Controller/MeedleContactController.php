@@ -47,7 +47,17 @@ class MeedleContactController extends BaseFrontController{
 				if ($recaptcha->score >= 0.5) {
 					$verified = true;
 				} else {
-					$verified = false;
+					$ch = "error-codes";
+                    if(isset($recaptcha->$ch)){
+                        $error=$recaptcha->$ch;
+                    //	echo $error[0];
+                        if($error[0] == 'missing-input-response'){
+                            $verified=false;
+                        }
+                        if($error[0] == 'timeout-or-duplicate'){
+                            $verified=true;
+                        }
+                    }
 				}
 			}
 		}
@@ -71,25 +81,8 @@ class MeedleContactController extends BaseFrontController{
 		$contact->setInfosNavig($this->getInfos());
 		$contact->save();
 		
-		$destinataire[ConfigQuery::getStoreEmail()] = ConfigQuery::getStoreName();
-		if(isset($_REQUEST['contactemail']))$destinataire[$_REQUEST['contactemail']] = $_REQUEST['contactname'];
-		
 		if($verified){
-		$this->getMailer()->sendEmailMessage('module-meedle-contact', 
-											 [ ConfigQuery::getStoreEmail() => $_REQUEST['nom'] . ' ' . $_REQUEST['prenom'] ], 
-											 $destinataire, 
-											 $_REQUEST, null, [], [], [ $_REQUEST['email'] => $_REQUEST['nom'] . ' ' . $_REQUEST['prenom']]);
-			/*
-			$this->getMailer()->sendSimpleEmailMessage(
-				[ ConfigQuery::getStoreEmail() => $_REQUEST['nom'] . ' ' . $_REQUEST['prenom'] ],
-				[ ConfigQuery::getStoreEmail() => ConfigQuery::getStoreName() ],
-				$_REQUEST['sujet'],
-				'',
-				$_REQUEST['description'],
-				[],
-				[],
-				[ $_REQUEST['email'] => $_REQUEST['nom'] . ' ' . $_REQUEST['prenom'] ]
-			);*/
+			$this->getMailer()->sendEmailToShopManagers('module-meedle-contact', $_REQUEST, [$_REQUEST['email'] => $_REQUEST['nom'] . ' ' . $_REQUEST['prenom']]);
 		}
 		return $this->generateRedirectFromRoute('contact.success');
 	}

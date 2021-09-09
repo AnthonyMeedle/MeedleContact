@@ -14,8 +14,7 @@ class MeedleContactLoop extends BaseLoop implements PropelSearchLoopInterface{
     protected function getArgDefinitions()
     {
         return new ArgumentCollection(
-            Argument::createIntListTypeArgument('id'),
-            Argument::createAnyTypeArgument('score')
+            Argument::createIntListTypeArgument('id')
         );
     }
     /**
@@ -30,14 +29,7 @@ class MeedleContactLoop extends BaseLoop implements PropelSearchLoopInterface{
         if ($id) {
             $search->filterById($id, Criteria::IN);
         }
-		$score = $this->getScore();
-        if ($score) {
-            $search->filterByScore($score, Criteria::GREATER_EQUAL);
-        }
-		
-		
-		
-		$search->orderById(Criteria::DESC);
+		$search->orderByCreatedAt(Criteria::DESC);
 		return $search;
     }
     /**
@@ -49,28 +41,35 @@ class MeedleContactLoop extends BaseLoop implements PropelSearchLoopInterface{
     {
         foreach ($loopResult->getResultDataCollection() as $contact) {
             $loopResultRow = new LoopResultRow($contact);
-
+            $info = json_decode($contact->getInfosCaptcha());
+            $infoScore='';
+            if($info){
+                $coderror='error-codes';
+                $infoScore=$info->$coderror[0];
+            }
+            $score = $contact->getScore();
+            if(!$score)$score=$infoScore;
             $loopResultRow
                 ->set('ID', $contact->getId())
                 ->set('CIVILITE', $contact->getCivilite())
                 ->set('NOM', $contact->getNom())
                 ->set('PRENOM', $contact->getPrenom())
-                ->set('PHONE', $contact->getPhone())
+                ->set('PHONE', $contact->getTelephone())
                 ->set('EMAIL', $contact->getEmail())
-                ->set('SUJET', $contact->getSujet())
-                ->set('DESCRIPTION', $contact->getDescription())
-                ->set('SCORE', $contact->getScore())
+                ->set('SUJET', $contact->getConnuecomment())
+                ->set('DESCRIPTION', $contact->getCommentaires())
+                ->set('SCORE', $score)
                 ->set('INFONAV', $contact->getInfosNavig())
                 ->set('INFOCAPTCHA', $contact->getInfosCaptcha())
-                ->set('NEWSLETTER', $contact->getAccepteNewsletter())
+//                ->set('NEWSLETTER', $contact->getAccepteNewsletter())
                 ->set('CREATEDAT', $contact->getCreatedAt());
 
-			if($contact->getAutre()){
+		/*	if($contact->getAutre()){
 				$autre = json_decode($contact->getAutre());
 				foreach($autre as $nomInfo => $info){
 					$loopResultRow->set(strtoupper($nomInfo), $info);
 				}
-			}
+			}*/
 			
             $loopResult->addRow($loopResultRow);
         }
